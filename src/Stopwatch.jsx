@@ -3,22 +3,6 @@ import React, { useState, useEffect } from "react";
 function Stopwatch() {
   const [timeinSec, setTimeinSec] = useState(0);
   const [timerOn, setTimierOn] = useState(false);
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
-  };
-  const startHandler = () => {
-    console.log("Start Handler");
-    //setTimierOn(!timerOn);
-    setTimierOn((preTimerState) => !preTimerState);
-    //setTimeinSec((prevState) => prevState + 1);
-  };
-  const resetHandler = () => {
-    console.log("Reset Handler");
-    setTimeinSec((prevState) => (prevState = 0));
-    setTimierOn(false);
-  };
   useEffect(() => {
     let myTimer;
     console.log("Timer is ON or OFF", timerOn);
@@ -31,6 +15,23 @@ function Stopwatch() {
     }
     return () => clearInterval(myTimer);
   }, [timerOn]);
+
+  const startHandler = () => {
+    console.log("Start Handler");
+    //setTimierOn(!timerOn);
+    setTimierOn((preTimerState) => !preTimerState);
+    //setTimeinSec((prevState) => prevState + 1);
+  };
+  const resetHandler = () => {
+    console.log("Reset Handler");
+    setTimierOn(false);
+    setTimeinSec((prevState) => (prevState = 0));
+  };
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+  };
 
   return (
     <div
@@ -46,7 +47,7 @@ function Stopwatch() {
     >
       <div>
         <h1>Stopwatch</h1>
-        <h2>Time:{formatTime(timeinSec)}</h2>
+        <h2>Time: {formatTime(timeinSec)}</h2>
         <button onClick={startHandler}>{timerOn ? "Stop" : "Start"}</button>
         <button onClick={resetHandler}>Reset</button>
       </div>
